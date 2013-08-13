@@ -1,0 +1,1817 @@
+<!DOCTYPE html>
+<!--
+  Copyright 2010 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+  Original slides: Marcin Wichary (mwichary@google.com)
+  Modifications: Ernest Delgado (ernestd@google.com)
+                 Alex Russell (slightlyoff@chromium.org)
+
+  landslide modifications: Adam Zapletal (adamzap@gmail.com)
+                           Nicolas Perriault (nperriault@gmail.com)
+-->
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Perl and SSH</title>
+    <!-- Styles -->
+    
+    <link rel="stylesheet" media="print" href="file:///usr/lib/python2.7/dist-packages/landslide/themes/default/css/print.css">
+    <link rel="stylesheet" media="screen, projection" href="file:///usr/lib/python2.7/dist-packages/landslide/themes/default/css/screen.css">
+    
+    
+    <!-- /Styles -->
+    <!-- Javascripts -->
+    
+    <script type="text/javascript" src="file:///usr/lib/python2.7/dist-packages/landslide/themes/default/js/slides.js"></script>
+    
+    
+    <!-- /Javascripts -->
+</head>
+<body>
+  <div id="blank"></div>
+  <div class="presentation">
+    <div id="current_presenter_notes">
+      <div id="presenter_note"></div>
+    </div>
+    <div class="slides">
+      
+      <!-- slide source: perl-and-ssh.md -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>Perl and SSH</h1></header>
+            
+            
+            <section><p>Salvador Fandiño (sfandino@yahoo.com)</p>
+<p>YAPC::Europe 2013</p></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="perl-and-ssh.md">perl-and-ssh.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              1/41
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: perl-and-ssh.md -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>How do you automate SSH tasks?</h1></header>
+            
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="perl-and-ssh.md">perl-and-ssh.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              2/41
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: perl-and-ssh.md -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>If you use ...</h1></header>
+            
+            
+            <section><ul>
+<li><code>system("ssh $host $cmd @args")</code></li>
+<li>or backticks</li>
+<li>Net::SSH</li>
+<li>Net::SSH::Perl</li>
+<li>Expect</li>
+<li>Net::SSH::Expect</li>
+</ul></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="perl-and-ssh.md">perl-and-ssh.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              3/41
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: perl-and-ssh.md -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>...you are living on the past!</h1></header>
+            
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="perl-and-ssh.md">perl-and-ssh.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              4/41
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: perl-and-ssh.md -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>Using system or backticks</h1></header>
+            
+            
+            <section><ul>
+<li>ok for simple things</li>
+<li>but very inneficient, opens a new SSH connection every time</li>
+<li>no password authentication</li>
+<li>you have to properly quote the arguments</li>
+<li>sometimes twice</li>
+<li>or be insecure</li>
+</ul></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="perl-and-ssh.md">perl-and-ssh.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              5/41
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: perl-and-ssh.md -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>Net::SSH</h1></header>
+            
+            
+            <section><ul>
+<li>simple wrapper for the <code>ssh</code> command</li>
+<li>provides also <code>sshopen2</code> and <code>sshopen3</code></li>
+<li>has same problems as using <code>system</code></li>
+</ul></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="perl-and-ssh.md">perl-and-ssh.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              6/41
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: perl-and-ssh.md -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>Net::SSH::Perl</h1></header>
+            
+            
+            <section><ul>
+<li><em>huge</em> module</li>
+<li>at its time it represented a great effort</li>
+<li>I guess most of it is a direct translation of OpenSSH C code</li>
+<li>but today, nobody maintains it</li>
+<li>lots of known <a href="https://rt.cpan.org/Public/Dist/Display.html?Name=Net-SSH-Perl">bugs</a></li>
+<li>very difficult to install (Math::Pari)</li>
+<li>API good for simple things, bad for advanced things</li>
+<li>supports SFTP via <a href="https://metacpan.org/module/Net::SFTP">Net::SFTP</a>, doesn't support SCP</li>
+</ul></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="perl-and-ssh.md">perl-and-ssh.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              7/41
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: perl-and-ssh.md -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>Expect</h1></header>
+            
+            
+            <section><ul>
+<li>Expect is a great module for automating interactive programs</li>
+<li>It's a good way to automate <code>ssh</code> password authentication</li>
+<li>After that, it is (usually) the wrong tool</li>
+<li>It talks to the remote shell, you don't want that!</li>
+<li>On some systems (AIX, HP-UX) ttys may drop data</li>
+</ul></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="perl-and-ssh.md">perl-and-ssh.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              8/41
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: perl-and-ssh.md -->
+      <div class="slide-wrapper">
+        <div class="slide has_code">
+          <div class="inner">
+            
+            <header><h1>BTW...</h1></header>
+            
+            
+            <section><div class="highlight"><pre><span class="lineno">1</span> <span class="k">my</span> <span class="nv">$pty</span> <span class="o">=</span> <span class="nn">IO::</span><span class="n">Pty</span><span class="o">-&gt;</span><span class="k">new</span><span class="p">;</span>
+<span class="lineno">2</span> <span class="k">my</span> <span class="nv">$expect</span> <span class="o">=</span> <span class="n">Expect</span><span class="o">-&gt;</span><span class="n">init</span><span class="p">(</span><span class="nv">$pty</span><span class="p">);</span>
+<span class="lineno">3</span> <span class="k">my</span> <span class="nv">$pid</span> <span class="o">=</span> <span class="n">open2</span><span class="p">(</span><span class="nv">$in</span><span class="p">,</span> <span class="nv">$out</span><span class="p">,</span> <span class="s">&#39;-&#39;</span><span class="p">);</span>
+<span class="lineno">4</span> <span class="k">unless</span> <span class="p">(</span><span class="nv">$pid</span><span class="p">)</span> <span class="p">{</span>
+<span class="lineno">5</span>   <span class="nb">defined</span> <span class="nv">$pid</span> <span class="ow">or</span> <span class="nb">die</span> <span class="s">&quot;unable to fork&quot;</span><span class="p">;</span>
+<span class="lineno">6</span>   <span class="nv">$pty</span><span class="o">-&gt;</span><span class="n">make_slave_controlling_terminal</span><span class="p">;</span>
+<span class="lineno">7</span>   <span class="k">do</span> <span class="p">{</span> <span class="nb">exec</span> <span class="nv">@ssh_cmd</span> <span class="p">};</span>
+<span class="lineno">8</span>   <span class="nb">exit</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<span class="lineno">9</span> <span class="p">}</span>
+</pre></div>
+</section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="perl-and-ssh.md">perl-and-ssh.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              9/41
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: perl-and-ssh.md -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>Net::SSH::Expect</h1></header>
+            
+            
+            <section><ul>
+<li>Builds on top of Expect</li>
+<li>On the wrong way</li>
+<li>It talks to the shell</li>
+<li>It is not reliable</li>
+</ul></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="perl-and-ssh.md">perl-and-ssh.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              10/41
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: perl-and-ssh.md -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>So, what should I use?</h1></header>
+            
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="perl-and-ssh.md">perl-and-ssh.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              11/41
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: perl-and-ssh.md -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>Modern SSH modules</h1></header>
+            
+            
+            <section><ul>
+<li>Net::SSH2</li>
+<li>Net::OpenSSH</li>
+<li>Net::SSH::Any</li>
+</ul></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="perl-and-ssh.md">perl-and-ssh.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              12/41
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: perl-and-ssh.md -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>Well, actually...</h1></header>
+            
+            
+            <section><ul>
+<li>Net::SSH2</li>
+<li>Net::OpenSSH</li>
+<li>Net::SSH::Any</li>
+<li>Net::SSH::Mechanize</li>
+<li>Net::OpenSSH::Parallel</li>
+<li>Net::OpenSSH::Compat</li>
+<li>Net::SFTP::Foreign</li>
+<li>...</li>
+</ul></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="perl-and-ssh.md">perl-and-ssh.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              13/41
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: perl-and-ssh.md -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>Net::SSH2</h1></header>
+            
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="perl-and-ssh.md">perl-and-ssh.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              14/41
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: perl-and-ssh.md -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>Net::SSH2</h1></header>
+            
+            
+            <section><ul>
+<li>wrapper for the libssh2 C library</li>
+<li>quite portable</li>
+<li>quite easy to install on Unix/Linux, almost easy to install on Windows, don't known about VMS</li>
+<li>it is a very thin wrapper</li>
+<li>efficient, can run several commands over one SSH connection</li>
+<li>C'ish low level API:<ul>
+<li>very simple things are easy to do</li>
+<li>not so simple things become quite hard</li>
+</ul>
+</li>
+<li>supports SCP</li>
+<li>very primitive and inneficient support for SFTP</li>
+<li>project started by David B. Robins, currently being actively maintained by Rafael Kitover</li>
+</ul></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="perl-and-ssh.md">perl-and-ssh.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              15/41
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: perl-and-ssh.md -->
+      <div class="slide-wrapper">
+        <div class="slide has_code">
+          <div class="inner">
+            
+            <header><h1>Net::SSH2 - usage</h1></header>
+            
+            
+            <section><div class="highlight"><pre><span class="lineno"> 1</span> <span class="k">use</span> <span class="nn">Net::</span><span class="n">SSH2</span><span class="p">;</span>
+<span class="lineno"> 2</span> 
+<span class="lineno"> 3</span> <span class="k">my</span> <span class="nv">$ssh2</span> <span class="o">=</span> <span class="nn">Net::</span><span class="n">SSH2</span><span class="o">-&gt;</span><span class="k">new</span><span class="p">();</span>
+<span class="lineno"> 4</span> 
+<span class="lineno"> 5</span> <span class="nv">$ssh2</span><span class="o">-&gt;</span><span class="nb">connect</span><span class="p">(</span><span class="s">&#39;example.com&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">die</span> <span class="vg">$!</span><span class="p">;</span>
+<span class="lineno"> 6</span> 
+<span class="lineno"> 7</span> <span class="k">if</span> <span class="p">(</span><span class="nv">$ssh2</span><span class="o">-&gt;</span><span class="n">auth_keyboard</span><span class="p">(</span><span class="s">&#39;fizban&#39;</span><span class="p">))</span> <span class="p">{</span>
+<span class="lineno"> 8</span>     <span class="k">my</span> <span class="nv">$chan</span> <span class="o">=</span> <span class="nv">$ssh2</span><span class="o">-&gt;</span><span class="n">channel</span><span class="p">();</span>
+<span class="lineno"> 9</span>     <span class="nv">$chan</span><span class="o">-&gt;</span><span class="nb">exec</span><span class="p">(</span><span class="s">&#39;program&#39;</span><span class="p">);</span>
+<span class="lineno">10</span> <span class="p">}</span>
+</pre></div>
+</section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="perl-and-ssh.md">perl-and-ssh.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              16/41
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: perl-and-ssh.md -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>Net::SSH2 problems</h1></header>
+            
+            
+            <section><ul>
+<li>very low level C'ish API: not for lazy people</li>
+<li>libssh2 is not a mature project yet</li>
+<li>requires a C compiler</li>
+</ul></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="perl-and-ssh.md">perl-and-ssh.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              17/41
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: perl-and-ssh.md -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>Net::OpenSSH</h1></header>
+            
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="perl-and-ssh.md">perl-and-ssh.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              18/41
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: perl-and-ssh.md -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>Net::OpenSSH</h1></header>
+            
+            
+            <section><ul>
+<li>wrapper around OpenSSH <code>ssh</code></li>
+<li>uses its connection multiplexing feature<ul>
+<li>several commands can be run over the same connection</li>
+<li>efficient</li>
+</ul>
+</li>
+<li>Perlish API with lots of belts and whistles</li>
+<li>easy to use, complex things are almost easy</li>
+<li>can work asynchronously</li>
+<li>supports SFTP, SCP, rsync and sshfs</li>
+<li>automatic argument quoting</li>
+</ul></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="perl-and-ssh.md">perl-and-ssh.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              19/41
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: perl-and-ssh.md -->
+      <div class="slide-wrapper">
+        <div class="slide has_code">
+          <div class="inner">
+            
+            <header><h1>Net::OpenSSH - usage</h1></header>
+            
+            
+            <section><div class="highlight"><pre><span class="lineno"> 1</span> <span class="k">use</span> <span class="nn">Net::</span><span class="n">OpenSSH</span><span class="p">;</span>
+<span class="lineno"> 2</span> <span class="k">my</span> <span class="nv">$ssh</span> <span class="o">=</span> <span class="nn">Net::</span><span class="n">OpenSSH</span><span class="o">-&gt;</span><span class="k">new</span><span class="p">(</span><span class="nv">$host</span><span class="p">,</span> <span class="n">user</span> <span class="o">=&gt;</span> <span class="nv">$user</span><span class="p">,</span> <span class="n">password</span> <span class="o">=&gt;</span> <span class="nv">$password</span><span class="p">);</span>
+<span class="lineno"> 3</span> <span class="nv">$ssh</span><span class="o">-&gt;</span><span class="n">die_on_error</span><span class="p">(</span><span class="s">&quot;unable to connect&quot;</span><span class="p">);</span>
+<span class="lineno"> 4</span> 
+<span class="lineno"> 5</span> <span class="k">my</span> <span class="nv">@output</span> <span class="o">=</span> <span class="nv">$ssh</span><span class="o">-&gt;</span><span class="n">capture</span><span class="p">(</span><span class="s">&quot;cat /etc/passwd&quot;</span><span class="p">);</span>
+<span class="lineno"> 6</span> 
+<span class="lineno"> 7</span> <span class="k">my</span> <span class="p">(</span><span class="nv">$out</span><span class="p">,</span> <span class="nv">$err</span><span class="p">)</span> <span class="o">=</span> <span class="nv">$ssh</span><span class="o">-&gt;</span><span class="n">capture2</span><span class="p">(</span><span class="s">&quot;find /&quot;</span><span class="p">);</span>
+<span class="lineno"> 8</span> 
+<span class="lineno"> 9</span> <span class="nv">$ssh</span><span class="o">-&gt;</span><span class="nb">system</span><span class="p">({</span><span class="n">stdin_data</span> <span class="o">=&gt;</span> <span class="s">&quot;hello\n&quot;</span><span class="p">},</span>
+<span class="lineno">10</span>              <span class="s">&quot;cat &gt;&gt;log&quot;</span><span class="p">);</span>
+<span class="lineno">11</span> 
+<span class="lineno">12</span> <span class="k">my</span> <span class="nv">$pid</span> <span class="o">=</span> <span class="nv">$ssh</span><span class="o">-&gt;</span><span class="n">spawn</span><span class="p">({</span><span class="n">stderr_to_stdout</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
+<span class="lineno">13</span>                        <span class="n">stdout_file</span> <span class="o">=&gt;</span> <span class="s">&quot;tar.log&quot;</span><span class="p">},</span>
+<span class="lineno">14</span>                       <span class="s">&#39;tar&#39;</span><span class="p">,</span> <span class="s">&#39;cf&#39;</span><span class="p">,</span> <span class="s">&#39;/tmp/my backup.tar&#39;</span><span class="p">,</span> <span class="s">&#39;/home/me&#39;</span><span class="p">);</span>
+<span class="lineno">15</span> <span class="nb">waitpid</span><span class="p">(</span><span class="nv">$pid</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+<span class="lineno">16</span> 
+<span class="lineno">17</span> <span class="nv">$ssh</span><span class="o">-&gt;</span><span class="n">scp_get</span><span class="p">(</span><span class="s">&#39;/tmp/*.tar&#39;</span><span class="p">,</span> <span class="s">&#39;.&#39;</span><span class="p">);</span>
+<span class="lineno">18</span> 
+<span class="lineno">19</span> <span class="nv">$ssh</span><span class="o">-&gt;</span><span class="n">rsync_put</span><span class="p">({</span><span class="n">verbose</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="n">safe_links</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">},</span>
+<span class="lineno">20</span>                 <span class="s">&quot;etc&quot;</span><span class="p">,</span> <span class="s">&quot;/etc&quot;</span><span class="p">);</span>
+<span class="lineno">21</span> 
+<span class="lineno">22</span> <span class="k">my</span> <span class="nv">$sftp</span> <span class="o">=</span> <span class="nv">$ssh</span><span class="o">-&gt;</span><span class="n">sftp</span><span class="p">;</span> <span class="c1"># return a Net::SFTP::Foreign object</span>
+<span class="lineno">23</span> <span class="k">my</span> <span class="nv">$ls</span> <span class="o">=</span> <span class="nv">$sftp</span><span class="o">-&gt;</span><span class="n">ls</span><span class="p">;</span>
+</pre></div>
+</section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="perl-and-ssh.md">perl-and-ssh.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              20/41
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: perl-and-ssh.md -->
+      <div class="slide-wrapper">
+        <div class="slide has_code">
+          <div class="inner">
+            
+            <header><h1>Net::OpenSSH argument quoting</h1></header>
+            
+            
+            <section><div class="highlight"><pre><span class="lineno"> 1</span> <span class="k">my</span> <span class="nv">$out</span> <span class="o">=</span> <span class="nv">$ssh</span><span class="o">-&gt;</span><span class="n">capture</span><span class="p">(</span><span class="s">&quot;ls /etc&quot;</span><span class="p">);</span> <span class="c1"># no quoting</span>
+<span class="lineno"> 2</span> <span class="k">my</span> <span class="nv">$out</span> <span class="o">=</span> <span class="nv">$ssh</span><span class="o">-&gt;</span><span class="n">capture</span><span class="p">(</span><span class="n">ls</span> <span class="o">=&gt;</span> <span class="s">&#39;~/My Documents&#39;</span><span class="p">);</span> <span class="c1"># quoting</span>
+<span class="lineno"> 3</span> <span class="k">my</span> <span class="nv">$out</span> <span class="o">=</span> <span class="nv">$ssh</span><span class="o">-&gt;</span><span class="n">capture</span><span class="p">({</span><span class="n">quote_args</span> <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">},</span>
+<span class="lineno"> 4</span>                         <span class="n">ls</span> <span class="o">=&gt;</span> <span class="s">&#39;~/My Documents&#39;</span><span class="p">);</span> <span class="c1"># no quoting</span>
+<span class="lineno"> 5</span> 
+<span class="lineno"> 6</span> <span class="c1"># selectively quoting arguments:</span>
+<span class="lineno"> 7</span> <span class="k">my</span> <span class="nv">$out</span> <span class="o">=</span> <span class="nv">$ssh</span><span class="o">-&gt;</span><span class="n">capture</span><span class="p">(</span><span class="n">ls</span> <span class="o">=&gt;</span> <span class="o">\</span><span class="s">&#39;~/My Documents/*.pdf&#39;</span><span class="p">);</span>
+<span class="lineno"> 8</span>         <span class="c1"># lets file name wildcards be expanded by the remote shell</span>
+<span class="lineno"> 9</span> 
+<span class="lineno">10</span> <span class="k">my</span> <span class="nv">$out</span> <span class="o">=</span> <span class="nv">$ssh</span><span class="o">-&gt;</span><span class="n">capture</span><span class="p">(</span><span class="n">ls</span> <span class="o">=&gt;</span> <span class="o">\\</span><span class="s">&#39;~/My Documents/*.pdf&#39;</span><span class="p">);</span> <span class="c1"># wrong!</span>
+<span class="lineno">11</span> 
+<span class="lineno">12</span> <span class="k">my</span> <span class="nv">$out</span> <span class="o">=</span> <span class="nv">$ssh</span><span class="o">-&gt;</span><span class="n">capture</span><span class="p">(</span><span class="nv">@cmd1</span><span class="p">,</span> <span class="o">\\</span><span class="s">&#39;&amp;&amp;&#39;</span><span class="p">,</span> <span class="nv">@cmd2</span><span class="p">,</span> <span class="o">\\</span><span class="s">&#39;2&gt;/dev/null&#39;</span><span class="p">);</span>
+</pre></div>
+</section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="perl-and-ssh.md">perl-and-ssh.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              21/41
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: perl-and-ssh.md -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>Net::OpenSSH argument quoting</h1></header>
+            
+            
+            <section><ul>
+<li>
+<p>On the stable release, argument quoting expects a POSIX compatible shell on the remote side</p>
+</li>
+<li>
+<p>The development release has support for different quoting backends</p>
+<ul>
+<li>POSIX (i.e. ksh, bash) and csh already there</li>
+<li>maybe Windows/DOS backend in the future</li>
+</ul>
+</li>
+</ul></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="perl-and-ssh.md">perl-and-ssh.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              22/41
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: perl-and-ssh.md -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>Net::OpenSSH problems</h1></header>
+            
+            
+            <section><ul>
+<li>Net::OpenSSH does not work on Windows<ul>
+<li>OpenSSH multiplexing feature does not work on Windows, not even under cygwin</li>
+</ul>
+</li>
+<li>Requires the OpenSSH <code>ssh</code> command</li>
+</ul></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="perl-and-ssh.md">perl-and-ssh.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              23/41
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: perl-and-ssh.md -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>Net::SSH::Any</h1></header>
+            
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="perl-and-ssh.md">perl-and-ssh.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              24/41
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: perl-and-ssh.md -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>Net::SSH::Any</h1></header>
+            
+            
+            <section><ul>
+<li>API very similar to Net::OpenSSH</li>
+<li>
+<p>works on top of</p>
+<ul>
+<li>Net::SSH2</li>
+<li>Net::OpenSSH</li>
+<li>maybe Net::SSH::Perl in the future</li>
+<li>maybe simple wrapper around native <code>ssh</code></li>
+</ul>
+</li>
+<li>
+<p>supports SCP and SFTP for file transfers, efficiently</p>
+</li>
+<li>a work in progress</li>
+<li>though, basic functionality is already stable</li>
+</ul></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="perl-and-ssh.md">perl-and-ssh.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              25/41
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: perl-and-ssh.md -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>Net::SSH::Mechanize</h1></header>
+            
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="perl-and-ssh.md">perl-and-ssh.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              26/41
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: perl-and-ssh.md -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>Net::SSH::Mechanize</h1></header>
+            
+            
+            <section><ul>
+<li>It uses the AnyEvent framework</li>
+<li>It aims to support <code>sudo</code>ing smoothly</li>
+<li>Limited API</li>
+<li>It talks to the remote shell, unreliable!</li>
+</ul></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="perl-and-ssh.md">perl-and-ssh.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              27/41
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: perl-and-ssh.md -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>Net::OpenSSH::Parallel</h1></header>
+            
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="perl-and-ssh.md">perl-and-ssh.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              28/41
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: perl-and-ssh.md -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>Net::OpenSSH::Parallel</h1></header>
+            
+            
+            <section><ul>
+<li>Run commands in parallel in remote hosts through SSH</li>
+<li>Build on top of Net::OpenSSH</li>
+<li>Declarative API:<ul>
+<li>tell the module all the actions you want to perform on the remote hosts</li>
+<li>let the module take care of everything and do the tasks</li>
+<li>handle possible errors</li>
+</ul>
+</li>
+</ul></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="perl-and-ssh.md">perl-and-ssh.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              29/41
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: perl-and-ssh.md -->
+      <div class="slide-wrapper">
+        <div class="slide has_code">
+          <div class="inner">
+            
+            <header><h1>Net::OpenSSH::Parallel - usage</h1></header>
+            
+            
+            <section><div class="highlight"><pre><span class="lineno"> 1</span> <span class="k">my</span> <span class="nv">$pssh</span> <span class="o">=</span> <span class="nn">Net::OpenSSH::</span><span class="n">Parallel</span><span class="o">-&gt;</span><span class="k">new</span><span class="p">;</span>
+<span class="lineno"> 2</span> 
+<span class="lineno"> 3</span> <span class="c1"># tell the object what the remote hosts are:</span>
+<span class="lineno"> 4</span> <span class="nv">$pssh</span><span class="o">-&gt;</span><span class="n">add_host</span><span class="p">(</span><span class="s">&#39;host1&#39;</span><span class="p">,</span> <span class="n">user</span> <span class="o">=&gt;</span> <span class="n">foo</span><span class="p">,</span> <span class="n">password</span> <span class="o">=&gt;</span> <span class="nv">$pwd</span><span class="p">);</span>
+<span class="lineno"> 5</span> <span class="nv">$pssh</span><span class="o">-&gt;</span><span class="n">add_host</span><span class="p">(</span><span class="s">&#39;host2&#39;</span><span class="p">,</span> <span class="n">user</span> <span class="o">=&gt;</span> <span class="n">foo</span><span class="p">,</span> <span class="n">password</span> <span class="o">=&gt;</span> <span class="nv">$pwd</span><span class="p">);</span>
+<span class="lineno"> 6</span> 
+<span class="lineno"> 7</span> <span class="c1"># declare the actions you want to run:</span>
+<span class="lineno"> 8</span> <span class="nv">$pssh</span><span class="o">-&gt;</span><span class="nb">push</span><span class="p">(</span><span class="s">&#39;host1&#39;</span><span class="p">,</span> <span class="n">command</span> <span class="o">=&gt;</span> <span class="s">&quot;echo hello from host1&quot;</span><span class="p">);</span>
+<span class="lineno"> 9</span> <span class="nv">$pssh</span><span class="o">-&gt;</span><span class="nb">push</span><span class="p">(</span><span class="s">&#39;host2&#39;</span><span class="p">,</span> <span class="n">command</span> <span class="o">=&gt;</span> <span class="s">&quot;echo hello from host2&quot;</span><span class="p">);</span>
+<span class="lineno">10</span> 
+<span class="lineno">11</span> <span class="c1"># for several host in one call:</span>
+<span class="lineno">12</span> <span class="nv">$pssh</span><span class="o">-&gt;</span><span class="nb">push</span><span class="p">(</span><span class="s">&#39;host*&#39;</span><span class="p">,</span> <span class="n">command</span> <span class="o">=&gt;</span> <span class="s">&quot;echo hello from some host&quot;</span><span class="p">);</span>
+<span class="lineno">13</span> 
+<span class="lineno">14</span> <span class="c1"># with variable expansion:</span>
+<span class="lineno">15</span> <span class="nv">$pssh</span><span class="o">-&gt;</span><span class="nb">push</span><span class="p">(</span><span class="s">&#39;host*&#39;</span><span class="p">,</span> <span class="n">command</span> <span class="o">=&gt;</span> <span class="s">&quot;echo hello from host %HOST%&quot;</span><span class="p">);</span>
+<span class="lineno">16</span> 
+<span class="lineno">17</span> <span class="c1"># and run it:</span>
+<span class="lineno">18</span> <span class="nv">$pssh</span><span class="o">-&gt;</span><span class="n">run</span><span class="p">;</span>
+</pre></div>
+</section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="perl-and-ssh.md">perl-and-ssh.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              30/41
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: perl-and-ssh.md -->
+      <div class="slide-wrapper">
+        <div class="slide has_code">
+          <div class="inner">
+            
+            <header><h1>Net::OpenSSH::Parallel - usage</h1></header>
+            
+            
+            <section><div class="highlight"><pre><span class="lineno"> 1</span> <span class="c1"># other actions:</span>
+<span class="lineno"> 2</span> <span class="nv">$pssh</span><span class="o">-&gt;</span><span class="nb">push</span><span class="p">(</span><span class="s">&#39;*&#39;</span><span class="p">,</span> <span class="n">scp_get</span> <span class="o">=&gt;</span> <span class="s">&#39;/var/log/messages.0&#39;</span><span class="p">,</span> <span class="s">&#39;logs/messages.0.%HOST%&#39;</span><span class="p">);</span>
+<span class="lineno"> 3</span> 
+<span class="lineno"> 4</span> <span class="nv">$pssh</span><span class="o">-&gt;</span><span class="nb">push</span><span class="p">(</span><span class="s">&#39;*&#39;</span><span class="p">,</span> <span class="n">rsync_put</span> <span class="o">=&gt;</span> <span class="s">&#39;/var/www&#39;</span><span class="p">,</span> <span class="s">&#39;/var/www&#39;</span><span class="p">);</span>
+<span class="lineno"> 5</span> 
+<span class="lineno"> 6</span> <span class="c1"># can pass extra arguments to the underlaying Net::OpenSSH methods</span>
+<span class="lineno"> 7</span> <span class="nv">$pssh</span><span class="o">-&gt;</span><span class="nb">push</span><span class="p">(</span><span class="s">&#39;*&#39;</span><span class="p">,</span> <span class="n">rsync_put</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="n">safe_links</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
+<span class="lineno"> 8</span>                                 <span class="n">stdout_file</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s">&#39;&gt;&gt;&#39;</span><span class="p">,</span> <span class="s">&#39;mylog&#39;</span><span class="p">],</span>
+<span class="lineno"> 9</span>                                 <span class="n">stderr_to_stdout</span> <span class="o">=&gt;</span> <span class="mi">1</span> <span class="p">},</span>
+<span class="lineno">10</span>               <span class="s">&#39;/var/www&#39;</span><span class="p">,</span> <span class="s">&#39;/var/www&#39;</span><span class="p">);</span>
+<span class="lineno">11</span> 
+<span class="lineno">12</span> <span class="c1"># runs a custom sub on a locally forked process</span>
+<span class="lineno">13</span> <span class="nv">$pssh</span><span class="o">-&gt;</span><span class="nb">push</span><span class="p">(</span><span class="s">&#39;*&#39;</span><span class="p">,</span> <span class="n">parsub</span> <span class="o">=&gt;</span> <span class="o">\&amp;</span><span class="n">my_sub</span><span class="p">);</span>
+</pre></div>
+</section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="perl-and-ssh.md">perl-and-ssh.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              31/41
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: perl-and-ssh.md -->
+      <div class="slide-wrapper">
+        <div class="slide has_code">
+          <div class="inner">
+            
+            <header><h1>Net::OpenSSH::Parallel - Expect and sudo</h1></header>
+            
+            
+            <section><div class="highlight"><pre><span class="lineno"> 1</span> <span class="k">sub </span><span class="nf">sudo_install</span> <span class="p">{</span>
+<span class="lineno"> 2</span>     <span class="k">my</span> <span class="p">(</span><span class="nv">$label</span><span class="p">,</span> <span class="nv">$ssh</span><span class="p">,</span> <span class="nv">@pkgs</span><span class="p">)</span> <span class="o">=</span> <span class="nv">@_</span><span class="p">;</span>
+<span class="lineno"> 3</span>     <span class="k">my</span> <span class="p">(</span><span class="nv">$pty</span><span class="p">)</span> <span class="o">=</span> <span class="nv">$ssh</span><span class="o">-&gt;</span><span class="n">open2pty</span><span class="p">(</span><span class="s">&#39;sudo&#39;</span><span class="p">,</span> <span class="s">&#39;apt-get&#39;</span><span class="p">,</span> <span class="s">&#39;install&#39;</span><span class="p">,</span> <span class="nv">@pkgs</span><span class="p">);</span>
+<span class="lineno"> 4</span>     <span class="k">my</span> <span class="nv">$expect</span> <span class="o">=</span> <span class="n">Expect</span><span class="o">-&gt;</span><span class="n">init</span><span class="p">(</span><span class="nv">$pty</span><span class="p">);</span>
+<span class="lineno"> 5</span>     <span class="nv">$expect</span><span class="o">-&gt;</span><span class="n">raw_pty</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="lineno"> 6</span>     <span class="nv">$expect</span><span class="o">-&gt;</span><span class="n">expect</span><span class="p">(</span><span class="nv">$timeout</span><span class="p">,</span> <span class="s">&quot;:&quot;</span><span class="p">);</span>
+<span class="lineno"> 7</span>     <span class="nv">$expect</span><span class="o">-&gt;</span><span class="nb">send</span><span class="p">(</span><span class="s">&quot;$passwd\n&quot;</span><span class="p">);</span>
+<span class="lineno"> 8</span>     <span class="nv">$expect</span><span class="o">-&gt;</span><span class="n">expect</span><span class="p">(</span><span class="nv">$timeout</span><span class="p">,</span> <span class="s">&quot;\n&quot;</span><span class="p">);</span>
+<span class="lineno"> 9</span>     <span class="nv">$expect</span><span class="o">-&gt;</span><span class="n">raw_pty</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="lineno">10</span>     <span class="k">while</span><span class="p">(</span><span class="sr">&lt;$expect&gt;</span><span class="p">)</span> <span class="p">{</span> <span class="k">print</span> <span class="p">};</span>
+<span class="lineno">11</span>     <span class="nb">close</span> <span class="nv">$expect</span><span class="p">;</span>
+<span class="lineno">12</span> <span class="p">}</span>
+<span class="lineno">13</span> 
+<span class="lineno">14</span> <span class="nv">$pssh</span><span class="o">-&gt;</span><span class="nb">push</span><span class="p">(</span><span class="s">&#39;*&#39;</span><span class="p">,</span> <span class="n">parsub</span> <span class="o">=&gt;</span> <span class="o">\&amp;</span><span class="n">sudo_install</span><span class="p">,</span> <span class="s">&#39;scummvm&#39;</span><span class="p">);</span>
+</pre></div>
+</section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="perl-and-ssh.md">perl-and-ssh.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              32/41
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: perl-and-ssh.md -->
+      <div class="slide-wrapper">
+        <div class="slide has_code">
+          <div class="inner">
+            
+            <header><h1>Net::OpenSSH::Parallel - adding dependencies</h1></header>
+            
+            
+            <section><div class="highlight"><pre><span class="lineno">1</span> <span class="nv">$pssh</span><span class="o">-&gt;</span><span class="nb">push</span><span class="p">(</span><span class="s">&#39;dmz*&#39;</span><span class="p">,</span> <span class="n">scp_get</span> <span class="o">=&gt;</span> <span class="s">&#39;/etc/passwd&#39;</span><span class="p">,</span> <span class="s">&#39;passwd.%HOST%&#39;</span><span class="p">);</span>
+<span class="lineno">2</span> <span class="nv">$pssh</span><span class="o">-&gt;</span><span class="nb">push</span><span class="p">(</span><span class="s">&#39;safe&#39;</span><span class="p">,</span> <span class="nb">join</span> <span class="o">=&gt;</span> <span class="s">&#39;dmz*&#39;</span><span class="p">);</span>
+<span class="lineno">3</span> <span class="nv">$pssh</span><span class="o">-&gt;</span><span class="nb">push</span><span class="p">(</span><span class="s">&#39;safe&#39;</span><span class="p">,</span> <span class="n">command</span> <span class="o">=&gt;</span> <span class="nb">mkdir</span><span class="p">,</span> <span class="s">&quot;/var/safe/$date&quot;</span><span class="p">);</span>
+<span class="lineno">4</span> <span class="nv">$pssh</span><span class="o">-&gt;</span><span class="nb">push</span><span class="p">(</span><span class="s">&#39;safe&#39;</span><span class="p">,</span> <span class="n">scp_put</span> <span class="o">=&gt;</span> <span class="s">&#39;passwd.*&#39;</span><span class="p">,</span> <span class="s">&quot;/var/safe/$date&quot;</span><span class="p">);</span>
+<span class="lineno">5</span> <span class="nv">$pssh</span><span class="o">-&gt;</span><span class="n">run</span><span class="p">;</span>
+</pre></div>
+</section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="perl-and-ssh.md">perl-and-ssh.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              33/41
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: perl-and-ssh.md -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>Net::OpenSSH::Parallel problems</h1></header>
+            
+            
+            <section><ul>
+<li>Unable to distribute tasks around a set of hosts</li>
+<li>Can't run more than one command per host simultaneously</li>
+<li>stdin/stdout/stderr has to go to the file system, no pipes between tasks</li>
+</ul></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="perl-and-ssh.md">perl-and-ssh.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              34/41
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: perl-and-ssh.md -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>Net::OpenSSH::Compat</h1></header>
+            
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="perl-and-ssh.md">perl-and-ssh.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              35/41
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: perl-and-ssh.md -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>Net::OpenSSH::Compat</h1></header>
+            
+            
+            <section><ul>
+<li>Implements most of Net::SSH::Perl and Net::SSH2 APIs in top of Net::OpenSSH</li>
+<li>Because sometimes people has problems installing them</li>
+</ul></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="perl-and-ssh.md">perl-and-ssh.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              36/41
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: perl-and-ssh.md -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>Net::SFTP::Foreign</h1></header>
+            
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="perl-and-ssh.md">perl-and-ssh.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              37/41
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: perl-and-ssh.md -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>Other interesting modules</h1></header>
+            
+            
+            <section><ul>
+<li>SSH::Batch</li>
+<li>GRID::Machine</li>
+<li>POE::Component::OpenSSH</li>
+<li>App::MrShell</li>
+</ul></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="perl-and-ssh.md">perl-and-ssh.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              38/41
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: perl-and-ssh.md -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>Questions</h1></header>
+            
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="perl-and-ssh.md">perl-and-ssh.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              39/41
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: perl-and-ssh.md -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>Thank you!</h1></header>
+            
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="perl-and-ssh.md">perl-and-ssh.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              40/41
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: perl-and-ssh.md -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>Links</h1></header>
+            
+            
+            <section><ul>
+<li><a href="http://github.com/salva/perl-and-ssh.git">The talk</a></li>
+</ul></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="perl-and-ssh.md">perl-and-ssh.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              41/41
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+  <div id="toc" class="sidebar hidden">
+    <h2>Table of Contents</h2>
+    <table>
+      <caption>Table of Contents</caption>
+      
+      <tr id="toc-row-1">
+        <th><a href="#slide1">Perl and SSH</a></th>
+        <td><a href="#slide1">1</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-2">
+        <th><a href="#slide2">How do you automate SSH tasks?</a></th>
+        <td><a href="#slide2">2</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-3">
+        <th><a href="#slide3">If you use ...</a></th>
+        <td><a href="#slide3">3</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-4">
+        <th><a href="#slide4">...you are living on the past!</a></th>
+        <td><a href="#slide4">4</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-5">
+        <th><a href="#slide5">Using system or backticks</a></th>
+        <td><a href="#slide5">5</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-6">
+        <th><a href="#slide6">Net::SSH</a></th>
+        <td><a href="#slide6">6</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-7">
+        <th><a href="#slide7">Net::SSH::Perl</a></th>
+        <td><a href="#slide7">7</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-8">
+        <th><a href="#slide8">Expect</a></th>
+        <td><a href="#slide8">8</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-9">
+        <th><a href="#slide9">BTW...</a></th>
+        <td><a href="#slide9">9</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-10">
+        <th><a href="#slide10">Net::SSH::Expect</a></th>
+        <td><a href="#slide10">10</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-11">
+        <th><a href="#slide11">So, what should I use?</a></th>
+        <td><a href="#slide11">11</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-12">
+        <th><a href="#slide12">Modern SSH modules</a></th>
+        <td><a href="#slide12">12</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-13">
+        <th><a href="#slide13">Well, actually...</a></th>
+        <td><a href="#slide13">13</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-14">
+        <th><a href="#slide14">Net::SSH2</a></th>
+        <td><a href="#slide14">14</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-15">
+        <th><a href="#slide15">Net::SSH2</a></th>
+        <td><a href="#slide15">15</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-16">
+        <th><a href="#slide16">Net::SSH2 - usage</a></th>
+        <td><a href="#slide16">16</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-17">
+        <th><a href="#slide17">Net::SSH2 problems</a></th>
+        <td><a href="#slide17">17</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-18">
+        <th><a href="#slide18">Net::OpenSSH</a></th>
+        <td><a href="#slide18">18</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-19">
+        <th><a href="#slide19">Net::OpenSSH</a></th>
+        <td><a href="#slide19">19</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-20">
+        <th><a href="#slide20">Net::OpenSSH - usage</a></th>
+        <td><a href="#slide20">20</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-21">
+        <th><a href="#slide21">Net::OpenSSH argument quoting</a></th>
+        <td><a href="#slide21">21</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-22">
+        <th><a href="#slide22">Net::OpenSSH argument quoting</a></th>
+        <td><a href="#slide22">22</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-23">
+        <th><a href="#slide23">Net::OpenSSH problems</a></th>
+        <td><a href="#slide23">23</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-24">
+        <th><a href="#slide24">Net::SSH::Any</a></th>
+        <td><a href="#slide24">24</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-25">
+        <th><a href="#slide25">Net::SSH::Any</a></th>
+        <td><a href="#slide25">25</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-26">
+        <th><a href="#slide26">Net::SSH::Mechanize</a></th>
+        <td><a href="#slide26">26</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-27">
+        <th><a href="#slide27">Net::SSH::Mechanize</a></th>
+        <td><a href="#slide27">27</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-28">
+        <th><a href="#slide28">Net::OpenSSH::Parallel</a></th>
+        <td><a href="#slide28">28</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-29">
+        <th><a href="#slide29">Net::OpenSSH::Parallel</a></th>
+        <td><a href="#slide29">29</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-30">
+        <th><a href="#slide30">Net::OpenSSH::Parallel - usage</a></th>
+        <td><a href="#slide30">30</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-31">
+        <th><a href="#slide31">Net::OpenSSH::Parallel - usage</a></th>
+        <td><a href="#slide31">31</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-32">
+        <th><a href="#slide32">Net::OpenSSH::Parallel - Expect and sudo</a></th>
+        <td><a href="#slide32">32</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-33">
+        <th><a href="#slide33">Net::OpenSSH::Parallel - adding dependencies</a></th>
+        <td><a href="#slide33">33</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-34">
+        <th><a href="#slide34">Net::OpenSSH::Parallel problems</a></th>
+        <td><a href="#slide34">34</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-35">
+        <th><a href="#slide35">Net::OpenSSH::Compat</a></th>
+        <td><a href="#slide35">35</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-36">
+        <th><a href="#slide36">Net::OpenSSH::Compat</a></th>
+        <td><a href="#slide36">36</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-37">
+        <th><a href="#slide37">Net::SFTP::Foreign</a></th>
+        <td><a href="#slide37">37</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-38">
+        <th><a href="#slide38">Other interesting modules</a></th>
+        <td><a href="#slide38">38</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-39">
+        <th><a href="#slide39">Questions</a></th>
+        <td><a href="#slide39">39</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-40">
+        <th><a href="#slide40">Thank you!</a></th>
+        <td><a href="#slide40">40</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-41">
+        <th><a href="#slide41">Links</a></th>
+        <td><a href="#slide41">41</a></td>
+      </tr>
+      
+      
+    </table>
+  </div>
+  
+  <div id="help" class="sidebar hidden">
+    <h2>Help</h2>
+    <table>
+      <caption>Help</caption>
+      <tr>
+        <th>Table of Contents</th>
+        <td>t</td>
+      </tr>
+      <tr>
+        <th>Exposé</th>
+        <td>ESC</td>
+      </tr>
+      <tr>
+        <th>Full screen slides</th>
+        <td>e</td>
+      </tr>
+      <tr>
+        <th>Presenter View</th>
+        <td>p</td>
+      </tr>
+      <tr>
+        <th>Source Files</th>
+        <td>s</td>
+      </tr>
+      <tr>
+        <th>Slide Numbers</th>
+        <td>n</td>
+      </tr>
+      <tr>
+        <th>Toggle screen blanking</th>
+        <td>b</td>
+      </tr>
+      <tr>
+        <th>Show/hide slide context</th>
+        <td>c</td>
+      </tr>
+      <tr>
+        <th>Notes</th>
+        <td>2</td>
+      </tr>
+      <tr>
+        <th>Help</th>
+        <td>h</td>
+      </tr>
+    </table>
+  </div>
+  <script>main()</script>
+</body>
+</html>
