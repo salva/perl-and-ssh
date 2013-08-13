@@ -379,7 +379,7 @@ YAPC::Europe 2013
 
 # Net::OpenSSH::Compat
 
-- Implements most of Net::SSH::Perl and Net::SSH2 APIs in top of Net::OpenSSH
+- Implements most of Net::SSH::Perl and Net::SSH2 APIs on top of Net::OpenSSH
 - Because sometimes people has problems installing them
 
 ---
@@ -391,9 +391,10 @@ YAPC::Europe 2013
 # Other interesting modules
 
 - SSH::Batch
-- GRID::Machine
-- POE::Component::OpenSSH
 - App::MrShell
+- POE::Component::OpenSSH
+- GRID::Machine
+- IPC::PerlSSH
 
 ---
 
