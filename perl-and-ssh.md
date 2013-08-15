@@ -21,7 +21,7 @@ YAPC::Europe 2013
 
 ---
 
-# ...you are living on the past!
+# ...you are living in the past!
 
 ---
 
@@ -354,7 +354,7 @@ YAPC::Europe 2013
 
 ---
 
-# Net::OpenSSH::Parallel - adding dependencies
+# Net::OpenSSH::Parallel - dependencies
 
     !perl
     $pssh->push('dmz*', scp_get => '/etc/passwd', 'passwd.%HOST%');
@@ -388,6 +388,13 @@ YAPC::Europe 2013
 
 ---
 
+# On the works...
+
+- Test::SSH
+- [Net::OpenSSH::Gateway](http://github.com/salva/p5-Net-OpenSSH-Gateway)
+
+---
+
 # Other interesting modules
 
 - SSH::Batch
@@ -395,6 +402,8 @@ YAPC::Europe 2013
 - POE::Component::OpenSSH
 - GRID::Machine
 - IPC::PerlSSH
+- (R)?ex
+- ...
 
 ---
 
@@ -408,4 +417,4 @@ YAPC::Europe 2013
 
 # Links
 
-- [The talk](http://github.com/salva/perl-and-ssh.git)
+- The talk: http://github.com/salva/perl-and-ssh.git
